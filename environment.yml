@@ -1,0 +1,13 @@
+name: biocad
+channels:
+  - conda-forge
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+dependencies:
+  - python=3.11
+  - rdkit
+  - ipykernel
+  - notebook=7.0.6
+  - openff-interchange
+  - openff-toolkit
+prefix: /home/belyash/anaconda3/envs/biocad
