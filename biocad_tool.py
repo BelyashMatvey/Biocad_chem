@@ -109,12 +109,7 @@ def process_mol_group(args: Tuple[MolGroupKey, List[Chem.Mol], str]) -> None:
     logger.info(f"Processing: {mol_name} ({len(mols)} conformers)")
 
     base_mol = mols[0]
-
-    try:
-        Chem.SanitizeMol(base_mol)
-    except Exception as e:
-        logger.error(f"Failed sanitize base mol {mol_name}: {e}")
-        return
+    Chem.SanitizeMol(base_mol)
 
     off_mol, interchange = build_interchange(base_mol, mol_name)
 
@@ -130,12 +125,6 @@ def process_mol_group(args: Tuple[MolGroupKey, List[Chem.Mol], str]) -> None:
         try:
             Chem.SanitizeMol(rdmol)
             coords_nm = extract_coords_nm(rdmol)
-
-            if coords_nm.shape[0] != off_mol.n_atoms:
-                logger.warning(
-                    f"Atom mismatch in {mol_name}: {coords_nm.shape[0]} vs {off_mol.n_atoms}"
-                )
-                continue
 
             interchange.positions = coords_nm
             interchange.box = compute_box(coords_nm)
